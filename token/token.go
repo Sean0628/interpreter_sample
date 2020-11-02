@@ -7,8 +7,8 @@ const (
 	EOF     = "EOF"
 
 	// Identifiers + literals
-	INDENT = "INDENT" // add, foobar, x, y, ...
-	INT    = "INT"    // 123456
+	IDENT = "IDENT" // add, foobar, x, y, ...
+	INT   = "INT"   // 123456
 
 	// Operators
 	ASSIGN = "="
@@ -28,7 +28,20 @@ const (
 	LET      = "LET"
 )
 
+var keywords = map[string]TokenType{
+	"fn":  FUNCTION,
+	"let": LET,
+}
+
 type Token struct {
 	Type    TokenType
 	Literal string
+}
+
+func LookupIdent(ident string) TokenType {
+	if tok, ok := keywords[ident]; ok {
+		return tok
+	}
+
+	return IDENT
 }
